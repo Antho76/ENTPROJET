@@ -5,6 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,11 +56,23 @@ public class ServletCentrale extends HttpServlet {
 	                utilisateur.getMotdepasse().equals(motdepasse)) {
 	                // Authentification réussie
 	                String type = utilisateur.getType();
-	                response.getWriter().println("<html><body>Bonjour " + identifiant + ", vous etes un " + type + "</body></html>");
+	                if ("admin".equals(type)) {
+	                    // Rediriger vers la page d'administration
+	                    RequestDispatcher dispatcher = request.getRequestDispatcher("AdminPage.jsp");
+	                    dispatcher.forward(request, response);
+	                } else if ("eleve".equals(type)) {
+	                    // Rediriger vers la page des élèves
+	                    RequestDispatcher dispatcher = request.getRequestDispatcher("ElevePage.jsp");
+	                    dispatcher.forward(request, response);
+	                }
 	                return;
 	            }
 	        }
-	 }
+
+	        // Authentification échouée
+	        response.getWriter().println("<html><body>Identifiant ou mot de passe incorrect</body></html>");
+	    }
+	 
 	
 	
 
