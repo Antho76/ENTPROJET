@@ -43,7 +43,7 @@ public class ServletCentrale extends HttpServlet {
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
-	/**
+	/** 
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	 protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
