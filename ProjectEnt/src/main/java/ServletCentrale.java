@@ -6,6 +6,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Servlet implementation class ServletCentrale
@@ -15,12 +17,15 @@ import java.io.IOException;
 public class ServletCentrale extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     int nbappel = 0;
+    private List<Utilisateur> utilisateurs = new ArrayList<>();
     /**
      * @see HttpServlet#HttpServlet()
      */
     public ServletCentrale() {
         super();
-        // TODO Auto-generated constructor stub test
+        // Ajoutez des utilisateurs de base
+        utilisateurs.add(new Utilisateur("admin", "adminpass", "admin"));
+        utilisateurs.add(new Utilisateur("eleve", "elevepass", "eleve"));
     }
 
 	/**
@@ -41,13 +46,20 @@ public class ServletCentrale extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().println("<html><body>Bonjour "+request.getParameter("identifiant"));
-		
-		response.getWriter().println("<p>Votre mot de passe est :"+request.getParameter("motdepasse")+"</p>");
-	}
-	
+	 protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	        String identifiant = request.getParameter("identifiant");
+	        String motdepasse = request.getParameter("motdepasse");
+
+	        for (Utilisateur utilisateur : utilisateurs) {
+	            if (utilisateur.getIdentifiant().equals(identifiant) &&
+	                utilisateur.getMotdepasse().equals(motdepasse)) {
+	                // Authentification réussie
+	                String type = utilisateur.getType();
+	                response.getWriter().println("<html><body>Bonjour " + identifiant + ", vous etes un " + type + "</body></html>");
+	                return;
+	            }
+	        }
+	 }
 	
 	
 
