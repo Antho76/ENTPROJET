@@ -65,7 +65,7 @@
     <label for="password">Mot de passe:</label>
     <input type="password" id="motdepasse" name="motdepasse" required>
 
-    <button type="submit">Connexion</button>
+    <button type="submit" name="action" value="connexion">Connexion</button>
 </form>
 
 </body>
