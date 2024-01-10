@@ -48,29 +48,39 @@ public class ServletCentrale extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	 protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	        String identifiant = request.getParameter("identifiant");
-	        String motdepasse = request.getParameter("motdepasse");
+		 String action = request.getParameter("action");
 
-	        for (Utilisateur utilisateur : utilisateurs) {
-	            if (utilisateur.getIdentifiant().equals(identifiant) &&
-	                utilisateur.getMotdepasse().equals(motdepasse)) {
-	                // Authentification réussie
-	                String type = utilisateur.getType();
-	                if ("admin".equals(type)) {
-	                    // Rediriger vers la page d'administration
-	                    RequestDispatcher dispatcher = request.getRequestDispatcher("AdminPage.jsp");
-	                    dispatcher.forward(request, response);
-	                } else if ("eleve".equals(type)) {
-	                    // Rediriger vers la page des élèves
-	                    RequestDispatcher dispatcher = request.getRequestDispatcher("ElevePage.jsp");
-	                    dispatcher.forward(request, response);
-	                }
-	                return;
-	            }
-	        }
+		    if ("connexion".equals(action)) {
+		        // Authentification
+		        String identifiant = request.getParameter("identifiant");
+		        String motdepasse = request.getParameter("motdepasse");
 
-	        // Authentification échouée
-	        response.getWriter().println("<html><body>Identifiant ou mot de passe incorrect</body></html>");
+		        for (Utilisateur utilisateur : utilisateurs) {
+		            if (utilisateur.getIdentifiant().equals(identifiant) &&
+		                utilisateur.getMotdepasse().equals(motdepasse)) {
+		                // Authentification réussie
+		                String type = utilisateur.getType();
+		                if ("admin".equals(type)) {
+		                    // Rediriger vers la page d'administration
+		                    RequestDispatcher dispatcher = request.getRequestDispatcher("AdminPage.jsp");
+		                    dispatcher.forward(request, response);
+		                } else if ("eleve".equals(type)) {
+		                    // Rediriger vers la page des élèves
+		                    RequestDispatcher dispatcher = request.getRequestDispatcher("ElevePage.jsp");
+		                    dispatcher.forward(request, response);
+		                }
+		                return;
+		            }
+		        }
+
+		        // Authentification échouée
+		        response.getWriter().println("<html><body>Identifiant ou mot de passe incorrect</body></html>");
+
+		    } else if ("createUserPage".equals(action)) {
+		    	RequestDispatcher dispatcher = request.getRequestDispatcher("FormCreateStudent.jsp");
+                dispatcher.forward(request, response);
+		}
+
 	    }
 	 
 	
