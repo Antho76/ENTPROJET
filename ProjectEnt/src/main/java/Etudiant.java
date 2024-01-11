@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class Etudiant {
 
     private String nom;
@@ -54,6 +56,14 @@ public class Etudiant {
     public String toString() {
     	return "nom : "+ this.nom + "prenom : " +this.prenom + "specialite : " + this.spe + "INE : "+ this.INE;   
     			}
+    
+    public static String afficherTousLesEtudiants(List<Etudiant> listeEtudiants) {
+        StringBuilder sb = new StringBuilder();
+        for (Etudiant etudiant : listeEtudiants) {
+            sb.append(etudiant.toString()).append("<br>"); // 
+        }
+        return sb.toString();
+    }
 
-    // Autres méthodes si nécessaire
+    
 }

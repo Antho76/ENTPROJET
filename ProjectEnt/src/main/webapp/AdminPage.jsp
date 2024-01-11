@@ -14,6 +14,7 @@
 
 <form action="ServletCentrale" method="post">
     <button type="submit" name="action" value="createUserPage">Créer un utilisateur</button>
+    <button type="submit" name="action" value="AffichageStudent">Afficher les étudiants</button>
 </form>
 
 <style>

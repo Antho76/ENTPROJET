@@ -1,4 +1,7 @@
 // Utilisateur.java
+
+import java.util.List;
+
 public class Utilisateur {
     private String identifiant;
     private String motdepasse;

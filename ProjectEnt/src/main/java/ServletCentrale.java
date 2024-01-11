@@ -28,6 +28,7 @@ public class ServletCentrale extends HttpServlet {
         // Ajoutez des utilisateurs de base
         utilisateurs.add(new Utilisateur("admin", "adminpass", "admin"));
         utilisateurs.add(new Utilisateur("eleve", "elevepass", "eleve"));
+        etudiants.add(new Etudiant("k","v","x","c"));
     }
 
 	/**
@@ -40,8 +41,28 @@ public class ServletCentrale extends HttpServlet {
     }
     */
     
+    private void listerEtudiants(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        List<Etudiant> etudiants = new ArrayList<>(); // Récupérez ou créez la liste des étudiants ici
+        String htmlResponse = Etudiant.afficherTousLesEtudiants(etudiants);
+
+        response.setContentType("text/html");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(htmlResponse);
+    }
+    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		String action = request.getParameter("action");
+
+		if("CreateStudent".equals(action)) {
+		    String nom = request.getParameter("nom");
+		    String prenom = request.getParameter("prenom");
+		    String INE = request.getParameter("INE");
+		    String specialite = request.getParameter("specialite");
+		    if (!nom.equals(" ") && !prenom.equals("") && !INE.equals("") && !specialite.equals("")) {
+		        etudiants.add(new Etudiant(nom, prenom, INE, specialite)); 
+		    }
+		}
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 	
@@ -89,9 +110,14 @@ public class ServletCentrale extends HttpServlet {
 		        String specialite = request.getParameter("specialite");
 		        if (nom!= " " && prenom!="" && INE != "" && specialite !="" ) {
 		        	etudiants.add(new Etudiant("nom", "prenom", "INE", "specialite"));
-		        	response.getWriter().println("<html><body>Etudiant ajouté</body></html>");
+		        	RequestDispatcher dispatcher = request.getRequestDispatcher("AffichageStudent.jsp");
+	                dispatcher.forward(request, response);
 		        }
 		    	
+		    }
+		    else if("AffichageStudent".equals(action)) {
+		    	RequestDispatcher dispatcher = request.getRequestDispatcher("AffichageStudent.jsp");
+                dispatcher.forward(request, response);
 		    }
 
 	    }
