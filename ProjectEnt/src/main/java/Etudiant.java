@@ -5,10 +5,10 @@ public class Etudiant extends Utilisateur{
     private String nom;
     private String prenom;
     private String spe;
-    private int INE;
+    private String INE;
     private ArrayList<Notes> notes;
 
-    public Etudiant(String nom, String prenom, String spe, int INE, String id, String mdp, String type) {
+    public Etudiant(String nom, String prenom, String spe, String INE, String id, String mdp, String type) {
         super(id,mdp,type);
         this.nom = nom;
         this.prenom = prenom;
@@ -29,7 +29,7 @@ public class Etudiant extends Utilisateur{
         return this.spe;
     }
 
-    public int getIne() {
+    public String getIne() {
         return this.INE;
     }
 
@@ -42,5 +42,12 @@ public class Etudiant extends Utilisateur{
         
         this.notes.add(nouvelleNote);
     }
-  }
-        
+
+  
+
+    public String toString() {
+    	return "nom : "+ this.nom + "prenom : " +this.prenom + "specialite : " + this.spe + "INE : "+ this.INE;   
+    			}
+
+    // Autres méthodes si nécessaire
+}

@@ -12,7 +12,7 @@
     <!-- Ajoutez ici le contenu spécifique pour les élèves -->
 </body>
 
-<form>
+<form action="ServletCentrale" method="post">
 
 <label for="nom">Nom :</label>
     <input type="text" name="nom" required><br>
@@ -25,8 +25,8 @@
 
     <label for="INE">INE :</label>
     <input type="text" name="INE" required><br>
-
-    <input type="submit" value="Créer Étudiant">
+    <
+    <button type="submit" name="action" value="CreateStudent">Connexion</button>
 
 </form>
 </html>
