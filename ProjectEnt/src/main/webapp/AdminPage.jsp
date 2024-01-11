@@ -28,5 +28,13 @@ button {
         }
 </style>
 
+<form action="ServletCentrale" method="post">
+    <button type="submit" name="action" value="AddNotePage">ajouter une note</button>
+</form>
+
+<style>
+
+</style>
+
 </html>
 

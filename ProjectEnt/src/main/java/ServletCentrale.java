@@ -93,10 +93,12 @@ public class ServletCentrale extends HttpServlet {
 		        }
 		    	
 		    }
+		    
+		    else if ("AddNotePage".equals(action)) {
+		    	RequestDispatcher dispatcher = request.getRequestDispatcher("FormulaireAddNotes.jsp");
+                dispatcher.forward(request, response);
 
 	    }
-	 
-	
-	
+	 }
 
 }
