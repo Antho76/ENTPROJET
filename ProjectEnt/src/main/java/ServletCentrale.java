@@ -19,6 +19,7 @@ public class ServletCentrale extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     int nbappel = 0;
     private List<Utilisateur> utilisateurs = new ArrayList<>();
+    private List<Etudiant> etudiants = new ArrayList<>();
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -43,6 +44,7 @@ public class ServletCentrale extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -80,6 +82,17 @@ public class ServletCentrale extends HttpServlet {
 		    	RequestDispatcher dispatcher = request.getRequestDispatcher("FormCreateStudent.jsp");
                 dispatcher.forward(request, response);
 		}
+		    else if("CreateStudent".equals(action)) {
+		    	String nom = request.getParameter("nom");
+		        String prenom = request.getParameter("prenom");
+		        String INE = request.getParameter("INE");
+		        String specialite = request.getParameter("specialite");
+		        if (nom!= " " && prenom!="" && INE != "" && specialite !="" ) {
+		        	etudiants.add(new Etudiant("nom", "prenom", "INE", "specialite"));
+		        	response.getWriter().println("<html><body>Etudiant ajouté</body></html>");
+		        }
+		    	
+		    }
 
 	    }
 	 

@@ -3,10 +3,10 @@ public class Etudiant {
     private String nom;
     private String prenom;
     private String spe;
-    private int INE;
+    private String INE;
     private double[] notes;
 
-    public Etudiant(String nom, String prenom, String spe, int INE) {
+    public Etudiant(String nom, String prenom, String spe, String INE) {
         this.nom = nom;
         this.prenom = prenom;
         this.spe = spe;
@@ -26,7 +26,7 @@ public class Etudiant {
         return this.spe;
     }
 
-    public int getIne() {
+    public String getIne() {
         return this.INE;
     }
 
@@ -50,6 +50,10 @@ public class Etudiant {
         // Remplacement du tableau de notes par le nouveau tableau
         this.notes = nouveauTableau;
     }
+    
+    public String toString() {
+    	return "nom : "+ this.nom + "prenom : " +this.prenom + "specialite : " + this.spe + "INE : "+ this.INE;   
+    			}
 
     // Autres méthodes si nécessaire
 }
