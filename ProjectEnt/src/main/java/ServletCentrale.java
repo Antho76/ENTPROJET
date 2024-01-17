@@ -1,4 +1,5 @@
 import com.classes.*;
+import com.classes.Module;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -21,6 +22,9 @@ public class ServletCentrale extends HttpServlet {
     private List<Utilisateur> utilisateurs = new ArrayList<>();
     private List<Etudiant> etudiants = new ArrayList<>();
     private List<Notes> notes = new ArrayList<>();
+    private List<Matiere> matieres = new ArrayList<>();
+    private List<Module> modules = new ArrayList<>();
+
 
     /**
      * @see HttpServlet#HttpServlet()
@@ -33,6 +37,19 @@ public class ServletCentrale extends HttpServlet {
         etudiants.add(new Etudiant("Pain", "Anthonin", "maçonnerie", "0", "antho","pass", "etudiant" ));
         etudiants.add(new Etudiant("Didier","Deschamps","info","rffsj5","4","ea","eleve"));
 
+        matieres.add(new Matiere(3, "Français"));
+        matieres.add(new Matiere(4, "Anglais"));
+        matieres.add(new Matiere(5, "Analyse"));
+        matieres.add(new Matiere(6, "Algèbre"));
+        matieres.add(new Matiere(7, "Langage C"));
+        matieres.add(new Matiere(8, "BDD"));
+        System.out.println("Taille de la liste matieres : " + matieres.size());
+
+        
+        // Ajouter des modules spécifiques avec les matières correspondantes
+        modules.add(new Module(2, "Module Littéraire", new Matiere[]{matieres.get(0), matieres.get(1)}));
+        modules.add(new Module(3, "Module Maths", new Matiere[]{matieres.get(2), matieres.get(3)}));
+        modules.add(new Module(4, "Module Info", new Matiere[]{matieres.get(4), matieres.get(5)}));
     }
 
 	/**
@@ -129,6 +146,9 @@ public class ServletCentrale extends HttpServlet {
 	            }
 		    	// Redirection vers la page d'affichage des notes
                 request.setAttribute("etudiants", etudiants);
+                request.setAttribute("modules", modules);
+                request.setAttribute("matiere", matieres);
+
 
 		        RequestDispatcher dispatcher = request.getRequestDispatcher("DisplayNotes.jsp");
 		        dispatcher.forward(request, response);

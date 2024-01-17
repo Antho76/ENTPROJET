@@ -2,6 +2,9 @@
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.HashMap" %>
+<%@ page import="com.classes.Matiere" %>
+<%@ page import="com.classes.Module" %>
+<%@ page import="java.util.List" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -63,6 +66,29 @@
                 <td><%= note.getINE() %></td>
 				<td><%= etudiantMap.get(note.getINE()) %></td>
 				
+            </tr>
+        <% } %>
+    </table>
+    
+        <h2>Liste des Modules</h2>
+
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Nom du Module</th>
+            <th>Matières</th>
+        </tr>
+        <% for (Module module : (List<Module>)request.getAttribute("modules")) { %>
+            <tr>
+                <td><%= module.getId() %></td>
+                <td><%= module.getNom() %></td>
+                <td>
+                    <ul>
+                        <% for (Matiere matiere : module.getMatieres()) { %>
+                            <li><%= matiere.getNom() %></li>
+                        <% } %>
+                    </ul>
+                </td>
             </tr>
         <% } %>
     </table>
