@@ -1,3 +1,5 @@
+package com.classes;
+
 public class Notes {
         // Attributs
         private double valeur;
@@ -34,7 +36,7 @@ public class Notes {
             return this.semestre;
         }
         
-        public int getIdEtudiant() {
+        public int getINE() {
             return this.idEtudiant;
         }
 }

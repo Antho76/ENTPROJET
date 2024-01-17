@@ -1,3 +1,5 @@
+package com.classes;
+
 // Utilisateur.java
 public class Utilisateur {
     private String identifiant;
