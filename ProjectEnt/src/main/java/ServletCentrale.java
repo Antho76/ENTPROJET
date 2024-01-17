@@ -85,6 +85,24 @@ public class ServletCentrale extends HttpServlet {
 		                return;
 		            }
 		        }
+		        
+		        for (Etudiant etudiants : etudiants) {
+		            if (etudiants.getIdentifiant().equals(identifiant) &&
+		                etudiants.getMotdepasse().equals(motdepasse)) {
+		                // Authentification réussie
+		                String type = etudiants.getType();
+		                if ("admin".equals(type)) {
+		                    // Rediriger vers la page d'administration
+		                    RequestDispatcher dispatcher = request.getRequestDispatcher("AdminPage.jsp");
+		                    dispatcher.forward(request, response);
+		                } else if ("eleve".equals(type)) {
+		                    // Rediriger vers la page des élèves
+		                    RequestDispatcher dispatcher = request.getRequestDispatcher("ElevePage.jsp");
+		                    dispatcher.forward(request, response);
+		                }
+		                return;
+		            }
+		        }
 
 		        // Authentification échouée
 		        response.getWriter().println("<html><body>Identifiant ou mot de passe incorrect</body></html>");
@@ -99,7 +117,7 @@ public class ServletCentrale extends HttpServlet {
 		        String INE = request.getParameter("INE");
 		        String specialite = request.getParameter("specialite");
 		        if (nom!= " " && prenom!="" && INE != "" && specialite !="" ) {
-		        	etudiants.add(new Etudiant(nom, prenom, specialite, INE,nom+"."+prenom,specialite+nom , "eleve"));
+		        	etudiants.add(new Etudiant(nom, prenom, specialite, INE,prenom+"."+nom,specialite+nom , "eleve"));
 		        	response.getWriter().println("<html><body>Etudiant ajouté</body></html>");
 		        }
 		    	
