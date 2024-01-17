@@ -1,5 +1,4 @@
 
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -20,6 +19,8 @@ public class ServletCentrale extends HttpServlet {
     int nbappel = 0;
     private List<Utilisateur> utilisateurs = new ArrayList<>();
     private List<Etudiant> etudiants = new ArrayList<>();
+    private List<Notes> notes = new ArrayList<>();
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -99,6 +100,28 @@ public class ServletCentrale extends HttpServlet {
                 dispatcher.forward(request, response);
 
 	    }
+		    else if("AddNote".equals(action)) {
+		    	try {
+	                int note = Integer.parseInt(request.getParameter("note"));
+	                String module = request.getParameter("module");
+	                int semestre = Integer.parseInt(request.getParameter("semestre"));
+	                int INE = Integer.parseInt(request.getParameter("INE"));
+
+	                if (note >= 0 && module != null && semestre > 0) {
+	                    notes.add(new Notes(note, module, semestre, INE));
+	                    response.getWriter().println("<html><body>Note ajoutée</body></html>");
+	                    request.setAttribute("notes", notes);
+	                } else {
+	                    response.getWriter().println("<html><body>Erreur : Vérifiez les valeurs saisies</body></html>");
+	                }
+	            } catch (NumberFormatException e) {
+	                response.getWriter().println("<html><body>Erreur : La note ou le semestre doit être un nombre entier</body></html>");
+	            }
+		    	// Redirection vers la page d'affichage des notes
+		        RequestDispatcher dispatcher = request.getRequestDispatcher("DisplayNotes.jsp");
+		        dispatcher.forward(request, response);
+		    	
+		    }
 	 }
 
 }

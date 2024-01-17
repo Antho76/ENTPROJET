@@ -3,14 +3,14 @@ public class Notes {
         private double valeur;
         private String module;
         private int semestre;
-        private Etudiant etudiant;
+        private int idEtudiant;
 
         // Constructeur
-        public Notes(double valeur, String module, int semestre, Etudiant etudiant) {
+        public Notes(double valeur, String module, int semestre, int idEtudiant) {
             this.valeur = valeur;
             this.module = module;
             this.semestre = semestre;
-            this.etudiant=etudiant;
+            this.idEtudiant=idEtudiant;
         }
 
         // Méthodes d'accès (getters et setters)
@@ -34,7 +34,7 @@ public class Notes {
             return this.semestre;
         }
         
-        public Etudiant getEtudiant() {
-            return this.etudiant;
+        public int getIdEtudiant() {
+            return this.idEtudiant;
         }
 }
