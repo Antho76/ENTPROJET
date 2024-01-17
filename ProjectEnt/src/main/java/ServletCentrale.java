@@ -31,6 +31,8 @@ public class ServletCentrale extends HttpServlet {
         utilisateurs.add(new Utilisateur("admin", "adminpass", "admin"));
         utilisateurs.add(new Utilisateur("eleve", "elevepass", "eleve"));
         etudiants.add(new Etudiant("Pain", "Anthonin", "maçonnerie", "0", "antho","pass", "etudiant" ));
+        etudiants.add(new Etudiant("Didier","Deschamps","info","rffsj5","4","ea","eleve"));
+
     }
 
 	/**
@@ -45,7 +47,13 @@ public class ServletCentrale extends HttpServlet {
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		String action = request.getParameter("action");
+		if ("affichageStudent".equals(action)) {
+			request.setAttribute("etudiants", etudiants);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("AffichageStudent.jsp");
+	        dispatcher.forward(request, response);
+		}
+        response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 	
 
@@ -91,7 +99,7 @@ public class ServletCentrale extends HttpServlet {
 		        String INE = request.getParameter("INE");
 		        String specialite = request.getParameter("specialite");
 		        if (nom!= " " && prenom!="" && INE != "" && specialite !="" ) {
-		        	etudiants.add(new Etudiant("nom", "prenom", "INE", "specialite","eleve", "elevepass", "eleve"));
+		        	etudiants.add(new Etudiant(nom, prenom, specialite, INE,nom+"."+prenom,specialite+nom , "eleve"));
 		        	response.getWriter().println("<html><body>Etudiant ajouté</body></html>");
 		        }
 		    	

@@ -29,7 +29,7 @@ public class Etudiant extends Utilisateur{
         return this.spe;
     }
 
-    public String getINE() {
+    public String getIne() {
         return this.INE;
     }
 

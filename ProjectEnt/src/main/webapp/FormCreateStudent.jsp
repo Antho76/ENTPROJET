@@ -26,6 +26,7 @@
     <label for="INE">INE :</label>
     <input type="text" name="INE" required><br>
     
+    
     <button type="submit" name="action" value="CreateStudent">Connexion</button>
 
 </form>

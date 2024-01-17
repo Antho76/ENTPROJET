@@ -51,7 +51,7 @@
             
             // Remplir la map avec les noms et prénoms des étudiants
             for (Etudiant etudiant : etudiants) {
-                etudiantMap.put(etudiant.getINE(), etudiant.getNom() + " " + etudiant.getPrenom());
+                etudiantMap.put(etudiant.getIne(), etudiant.getNom() + " " + etudiant.getPrenom());
             }
             
             for (Notes note : notes) { 

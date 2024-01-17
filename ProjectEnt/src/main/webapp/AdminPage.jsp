@@ -32,6 +32,10 @@ button {
     <button type="submit" name="action" value="AddNotePage">ajouter une note</button>
 </form>
 
+<form action="ServletCentrale" method="get">
+    <button type="submit" name="action" value="affichageStudent">ajouter une note</button>
+</form>
+
 <style>
 
 </style>
