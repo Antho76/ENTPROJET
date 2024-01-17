@@ -30,6 +30,7 @@ public class ServletCentrale extends HttpServlet {
         // Ajoutez des utilisateurs de base
         utilisateurs.add(new Utilisateur("admin", "adminpass", "admin"));
         utilisateurs.add(new Utilisateur("eleve", "elevepass", "eleve"));
+        etudiants.add(new Etudiant("Pain", "Anthonin", "maçonnerie", "0", "antho","pass", "etudiant" ));
     }
 
 	/**
@@ -106,7 +107,7 @@ public class ServletCentrale extends HttpServlet {
 	                int note = Integer.parseInt(request.getParameter("note"));
 	                String module = request.getParameter("module");
 	                int semestre = Integer.parseInt(request.getParameter("semestre"));
-	                int INE = Integer.parseInt(request.getParameter("INE"));
+	                String INE = request.getParameter("INE");
 
 	                if (note >= 0 && module != null && semestre > 0) {
 	                    notes.add(new Notes(note, module, semestre, INE));
@@ -119,6 +120,8 @@ public class ServletCentrale extends HttpServlet {
 	                response.getWriter().println("<html><body>Erreur : La note ou le semestre doit être un nombre entier</body></html>");
 	            }
 		    	// Redirection vers la page d'affichage des notes
+                request.setAttribute("etudiants", etudiants);
+
 		        RequestDispatcher dispatcher = request.getRequestDispatcher("DisplayNotes.jsp");
 		        dispatcher.forward(request, response);
 		    	

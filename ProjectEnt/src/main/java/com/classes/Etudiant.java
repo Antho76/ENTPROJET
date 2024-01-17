@@ -7,8 +7,7 @@ public class Etudiant extends Utilisateur{
     private String prenom;
     private String spe;
     private String INE;
-    private ArrayList<Notes> notes;
-
+    
     public Etudiant(String nom, String prenom, String spe, String INE, String id, String mdp, String type) {
         super(id,mdp,type);
         this.nom = nom;
@@ -30,19 +29,10 @@ public class Etudiant extends Utilisateur{
         return this.spe;
     }
 
-    public String getIne() {
+    public String getINE() {
         return this.INE;
     }
 
-    public ArrayList<Notes> getNotes() {
-        return this.notes;
-    }
-
-    // Méthode pour ajouter une note
-    public void ajouterNote(Notes nouvelleNote) {
-        
-        this.notes.add(nouvelleNote);
-    }
 
   
 

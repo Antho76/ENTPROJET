@@ -5,10 +5,10 @@ public class Notes {
         private double valeur;
         private String module;
         private int semestre;
-        private int idEtudiant;
+        private String idEtudiant;
 
         // Constructeur
-        public Notes(double valeur, String module, int semestre, int idEtudiant) {
+        public Notes(double valeur, String module, int semestre, String idEtudiant) {
             this.valeur = valeur;
             this.module = module;
             this.semestre = semestre;
@@ -36,7 +36,7 @@ public class Notes {
             return this.semestre;
         }
         
-        public int getINE() {
+        public String getINE() {
             return this.idEtudiant;
         }
 }
