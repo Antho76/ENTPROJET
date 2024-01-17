@@ -1,11 +1,21 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
-<!DOCTYPE html>
-<html lang="en">
+<%@ page import="classes.Etudiant" %>
+<html>
 <head>
-    <title>Liste des Étudiants</title>
+    <title>Liste des Ã‰tudiants</title>
 </head>
 <body>
-    <h2>Liste des Étudiants</h2>
-    <%= request.getAttribute("etudiantsHtml") %>
+    <h2>Liste des Ã‰tudiants</h2>
+    <ul>
+        <% 
+        List<Etudiant> etudiants = (List<Etudiant>) request.getAttribute("listeEtudiants");
+        if(etudiants != null) {
+            for(Etudiant etudiant : etudiants) {
+                out.println("<li>" + etudiant + "</li>");
+            }
+        }
+        %>
+    </ul>
 </body>
 </html>
