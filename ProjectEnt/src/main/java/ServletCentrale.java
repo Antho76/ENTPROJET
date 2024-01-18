@@ -1,6 +1,5 @@
 import com.classes.*;
 import com.classes.Module;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -9,7 +8,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Servlet implementation class ServletCentrale
@@ -24,7 +25,7 @@ public class ServletCentrale extends HttpServlet {
     private List<Notes> notes = new ArrayList<>();
     private List<Matiere> matieres = new ArrayList<>();
     private List<Module> modules = new ArrayList<>();
-
+    private Map<String, List<String>> matieresMap = new HashMap<>();
 
     /**
      * @see HttpServlet#HttpServlet()
@@ -37,19 +38,26 @@ public class ServletCentrale extends HttpServlet {
         etudiants.add(new Etudiant("Pain", "Anthonin", "maçonnerie", "0", "antho","pass", "etudiant" ));
         etudiants.add(new Etudiant("Didier","Deschamps","info","rffsj5","4","ea","eleve"));
 
-        matieres.add(new Matiere(3, "Français"));
-        matieres.add(new Matiere(4, "Anglais"));
-        matieres.add(new Matiere(5, "Analyse"));
-        matieres.add(new Matiere(6, "Algèbre"));
-        matieres.add(new Matiere(7, "Langage C"));
-        matieres.add(new Matiere(8, "BDD"));
-        System.out.println("Taille de la liste matieres : " + matieres.size());
+        matieres.add(new Matiere(0, "Français"));
+        matieres.add(new Matiere(1, "Anglais"));
+        matieres.add(new Matiere(2, "Analyse"));
+        matieres.add(new Matiere(3, "Algèbre"));
+        matieres.add(new Matiere(4, "Langage C"));
+        matieres.add(new Matiere(5, "BDD"));
 
         
         // Ajouter des modules spécifiques avec les matières correspondantes
-        modules.add(new Module(2, "Module Littéraire", new Matiere[]{matieres.get(0), matieres.get(1)}));
-        modules.add(new Module(3, "Module Maths", new Matiere[]{matieres.get(2), matieres.get(3)}));
-        modules.add(new Module(4, "Module Info", new Matiere[]{matieres.get(4), matieres.get(5)}));
+        modules.add(new Module(0, "Module Littéraire", new Matiere[]{matieres.get(0), matieres.get(1)}));
+        modules.add(new Module(1, "Module Maths", new Matiere[]{matieres.get(2), matieres.get(3)}));
+        modules.add(new Module(2, "Module Info", new Matiere[]{matieres.get(4), matieres.get(5)}));
+        
+        for (Module module : modules) {
+            List<String> matieresList = new ArrayList<>();
+            for (Matiere matiere : module.getMatieres()) {
+                matieresList.add(matiere.getNom());
+            }
+            matieresMap.put(module.getNom(), matieresList);
+        }
     }
 
 	/**
@@ -60,7 +68,14 @@ public class ServletCentrale extends HttpServlet {
     	response.getWriter().println("<html><body>Bonjour tt le monde!!");
     	response.getWriter().println("<p>appel numero: " + (++nbappel) + "</p></body></html>");
     }
+     * @throws JSONException 
     */
+    
+    
+    private void setModulesAndMatieresAsAttributes(HttpServletRequest request) {
+        request.setAttribute("modules", modules);
+        request.setAttribute("matieresMap", matieresMap);
+    }
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -122,20 +137,22 @@ public class ServletCentrale extends HttpServlet {
 		    	
 		    }
 		    
-		    else if ("AddNotePage".equals(action)) {
-		    	RequestDispatcher dispatcher = request.getRequestDispatcher("FormulaireAddNotes.jsp");
-                dispatcher.forward(request, response);
-
-	    }
+		    else if ("AddNotePage".equals(action)) {		
+		            // Récupérer la liste des modules
+		            request.setAttribute("modules", modules);
+		            RequestDispatcher dispatcher = request.getRequestDispatcher("FormulaireAddNotes.jsp");
+		            dispatcher.forward(request, response);
+		        }
 		    else if("AddNote".equals(action)) {
 		    	try {
 	                int note = Integer.parseInt(request.getParameter("note"));
-	                String module = request.getParameter("module");
+	                int module = Integer.parseInt(request.getParameter("module"));
+	                int matiere = Integer.parseInt(request.getParameter("matiere"));
 	                int semestre = Integer.parseInt(request.getParameter("semestre"));
 	                String INE = request.getParameter("INE");
 
-	                if (note >= 0 && module != null && semestre > 0) {
-	                    notes.add(new Notes(note, module, semestre, INE));
+	                if (note >= 0  && semestre > 0) {
+	                    notes.add(new Notes(note, module, matiere, semestre, INE));
 	                    response.getWriter().println("<html><body>Note ajoutée</body></html>");
 	                    request.setAttribute("notes", notes);
 	                } else {
@@ -145,10 +162,15 @@ public class ServletCentrale extends HttpServlet {
 	                response.getWriter().println("<html><body>Erreur : La note ou le semestre doit être un nombre entier</body></html>");
 	            }
 		    	// Redirection vers la page d'affichage des notes
-                request.setAttribute("etudiants", etudiants);
-                request.setAttribute("modules", modules);
-                request.setAttribute("matiere", matieres);
+		    	
+		    	// Avant de rediriger vers la JSP
+		    	System.out.println("Modules: " + modules);
+		    	System.out.println("MatieresMap: " + matieresMap);
 
+		    	request.setAttribute("etudiants", etudiants);
+		    	request.setAttribute("modules", modules);
+		    	request.setAttribute("matieres", matieres);
+		    	request.setAttribute("matieresMap", matieresMap);
 
 		        RequestDispatcher dispatcher = request.getRequestDispatcher("DisplayNotes.jsp");
 		        dispatcher.forward(request, response);

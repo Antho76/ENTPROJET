@@ -3,14 +3,16 @@ package com.classes;
 public class Notes {
         // Attributs
         private double valeur;
-        private String module;
+        private int module;
+        private int matiere;
         private int semestre;
         private String idEtudiant;
 
         // Constructeur
-        public Notes(double valeur, String module, int semestre, String idEtudiant) {
+        public Notes(double valeur, int module, int matiere, int semestre, String idEtudiant) {
             this.valeur = valeur;
             this.module = module;
+            this.matiere = matiere;
             this.semestre = semestre;
             this.idEtudiant=idEtudiant;
         }
@@ -24,11 +26,16 @@ public class Notes {
             this.valeur = valeur;
         }
 
-        public String getModule() {
+        public int getModule() {
             return module;
         }
+        
+        public int getMatiere() {
+            return this.matiere;
+        }
+        
 
-        public void setModule(String module) {
+        public void setModule(int module) {
             this.module = module;
         }
         
