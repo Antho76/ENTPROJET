@@ -33,7 +33,7 @@
 <body>
 <% 
     int auth = (int) request.getAttribute("auth");
-    if (auth != 2){response.sendRedirect("test.jsp");};
+    if (auth != 1){response.sendRedirect("test.jsp");};
     %>
     <h2>Liste des Etudiants</h2>
 
