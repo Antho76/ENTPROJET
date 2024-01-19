@@ -40,6 +40,10 @@ button {
 <form action="ServletCentrale" method="get">
     <button type="submit" name="action" value="affichageEvaluations">Afficher les évaluations</button>
 </form>
+<form action="ServletCentrale" method="get">
+
+    <button type="submit" name="action" value="DisplayNotes">Afficher toutes les notes</button>
+</form>
 
 <style>
 
