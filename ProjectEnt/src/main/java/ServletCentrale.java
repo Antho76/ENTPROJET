@@ -183,7 +183,9 @@ public class ServletCentrale extends HttpServlet {
 		                }
 		                return;
 		            }
+
 		        }
+
 		        
 		        for (Etudiant etudiant : etudiants) {
 		            if (etudiant.getIdentifiant().equals(identifiant) &&
@@ -208,7 +210,10 @@ public class ServletCentrale extends HttpServlet {
 		                }
 		                return;
 		            }
+		            
 		        }
+		        RequestDispatcher dispatcher = request.getRequestDispatcher("test.jsp");
+                dispatcher.forward(request, response);
 
 		        // Authentification échouée
 		        response.getWriter().println("<html><body>Identifiant ou mot de passe incorrect</body></html>");
