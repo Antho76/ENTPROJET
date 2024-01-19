@@ -11,5 +11,9 @@
 <body>
     <h1>Bienvenue sur la page des élèves</h1>
     <!-- Ajoutez ici le contenu spécifique pour les élèves -->
+    
+    <form action="ServletCentrale" method="post">
+    <button type="submit" name="action" value="addEvaluation">Ajouter une évauation</button>
+</form>
 </body>
 </html>

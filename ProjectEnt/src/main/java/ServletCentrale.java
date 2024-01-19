@@ -28,6 +28,8 @@ public class ServletCentrale extends HttpServlet {
     private List<Matiere> matieres = new ArrayList<>();
     private List<Module> modules = new ArrayList<>();
     private Map<String, List<String>> matieresMap = new HashMap<>();
+    private List<Evaluation> evaluations = new ArrayList<>();
+
 
     /**
      * @see HttpServlet#HttpServlet()
@@ -46,6 +48,13 @@ public class ServletCentrale extends HttpServlet {
         matieres.add(new Matiere(3, "Algèbre"));
         matieres.add(new Matiere(4, "Langage C"));
         matieres.add(new Matiere(5, "BDD"));
+        
+        evaluations.add(new Evaluation(3,3,3,"test",1));
+        evaluations.add(new Evaluation(2,3,5,"test",0));
+        evaluations.add(new Evaluation(5,5,5,"test",2));
+        evaluations.add(new Evaluation(4,4,2,"test",1));
+        evaluations.add(new Evaluation(5,3,4,"test",0));
+        evaluations.add(new Evaluation(5,4,3,"test",2));
 
         
         // Ajouter des modules spécifiques avec les matières correspondantes
@@ -87,6 +96,12 @@ public class ServletCentrale extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("AffichageStudent.jsp");
 	        dispatcher.forward(request, response);
 		}
+		else if ("affichageEvaluations".equals(action)) {
+			request.setAttribute("evaluations", evaluations);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("AffichageEvaluation.jsp");
+	        dispatcher.forward(request, response);
+		}
+
         response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 	
@@ -235,6 +250,25 @@ public class ServletCentrale extends HttpServlet {
 		        // Dispatcher vers la page d'affichage des notes
 		        RequestDispatcher dispatcher = request.getRequestDispatcher("DisplayNotes.jsp");
 		        dispatcher.forward(request, response);
+		    }
+		    else if("addEvaluation".equals(action)) {
+		    	
+		    	RequestDispatcher dispatcher = request.getRequestDispatcher("FormulaireAddEvaluation.jsp");
+	            dispatcher.forward(request, response);
+		    }
+		    
+		    else if("Evaluate".equals(action)) {
+		    	
+		    	int qualisup = Integer.parseInt(request.getParameter("qualisup"));
+                int qualieq = Integer.parseInt(request.getParameter("qualieq"));
+                int travail = Integer.parseInt(request.getParameter("travail"));
+                int module = Integer.parseInt(request.getParameter("module"));
+                String com = request.getParameter("com");
+                
+                evaluations.add(new Evaluation(qualisup,qualieq,travail,com,module));
+                
+		    	RequestDispatcher dispatcher = request.getRequestDispatcher("ElevePage.jsp");
+	            dispatcher.forward(request, response);
 		    }
 	 }
 

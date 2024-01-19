@@ -37,6 +37,10 @@ button {
     <button type="submit" name="action" value="affichageStudent">Liste des étudiants</button>
 </form>
 
+<form action="ServletCentrale" method="get">
+    <button type="submit" name="action" value="affichageEvaluations">Afficher les évaluations</button>
+</form>
+
 <style>
 
 </style>
