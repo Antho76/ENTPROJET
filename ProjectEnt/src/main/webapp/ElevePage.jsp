@@ -9,6 +9,10 @@
     
 </head>
 <body>
+<% 
+    int auth = (int) request.getAttribute("auth");
+    if (auth != 2){response.sendRedirect("test.jsp");};
+    %>
     <h1>Bienvenue sur la page des élèves</h1>
     <!-- Ajoutez ici le contenu spécifique pour les élèves -->
     

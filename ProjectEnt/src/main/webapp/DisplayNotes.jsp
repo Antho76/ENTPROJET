@@ -62,6 +62,10 @@
     </style>
 </head>
 <body>
+<% 
+    int auth = (int) request.getAttribute("auth");
+    if (auth != 1){response.sendRedirect("test.jsp");};
+    %>
     <h2>Liste des Notes</h2>
 
     <table>

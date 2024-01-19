@@ -30,6 +30,7 @@ public class ServletCentrale extends HttpServlet {
     private List<Module> modules = new ArrayList<>();
     private Map<String, List<String>> matieresMap = new HashMap<>();
     private List<Evaluation> evaluations = new ArrayList<>();
+    private int auth = 0;
 
 
     /**
@@ -60,8 +61,8 @@ public class ServletCentrale extends HttpServlet {
         
         // Ajouter des modules spécifiques avec les matières correspondantes
         modules.add(new Module(0, "Module Littéraire", new Matiere[]{matieres.get(0), matieres.get(1)}));
-        modules.add(new Module(1, "Module Maths", new Matiere[]{matieres.get(2), matieres.get(3)}));
-        modules.add(new Module(2, "Module Info", new Matiere[]{matieres.get(4), matieres.get(5)}));
+        modules.add(new Module(1, "Module Mathématique", new Matiere[]{matieres.get(2), matieres.get(3)}));
+        modules.add(new Module(2, "Module informatique", new Matiere[]{matieres.get(4), matieres.get(5)}));
         
         for (Module module : modules) {
             List<String> matieresList = new ArrayList<>();
@@ -90,18 +91,24 @@ public class ServletCentrale extends HttpServlet {
     }
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setAttribute("auth", auth);
+
 		// TODO Auto-generated method stub
 		String action = request.getParameter("action");
 		if ("affichageStudent".equals(action)) {
 			request.setAttribute("etudiants", etudiants);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("AffichageStudent.jsp");
 	        dispatcher.forward(request, response);
-		}
-		else if ("affichageEvaluations".equals(action)) {
-			request.setAttribute("evaluations", evaluations);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("AffichageEvaluation.jsp");
+		} else if ("affichageEvaluations".equals(action)) {
+	        request.setAttribute("evaluations", evaluations);
+
+	        // Récupérer la liste des modules et la définir dans la requête
+	        List<String> modulesList = modules.stream().map(Module::getNom).collect(Collectors.toList());
+	        request.setAttribute("modules", modules);
+
+	        RequestDispatcher dispatcher = request.getRequestDispatcher("AffichageEvaluation.jsp");
 	        dispatcher.forward(request, response);
-		}
+	    }
 	    else if("DisplayNotes".equals(action)) {
 
 	    	request.setAttribute("notes", notes);
@@ -124,6 +131,8 @@ public class ServletCentrale extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	 protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+         request.setAttribute("auth", auth);
+
 		 String action = request.getParameter("action");
 
 		    if ("connexion".equals(action)) {
@@ -138,10 +147,16 @@ public class ServletCentrale extends HttpServlet {
 		                String type = utilisateur.getType();
 		                if ("admin".equals(type)) {
 		                    // Rediriger vers la page d'administration
+		                    auth = 1;
+		                    request.setAttribute("auth", auth);
+
 		                    RequestDispatcher dispatcher = request.getRequestDispatcher("AdminPage.jsp");
 		                    dispatcher.forward(request, response);
 		                } else if ("eleve".equals(type)) {
 		                    // Rediriger vers la page des élèves
+                            auth = 2;
+                            request.setAttribute("auth", auth);
+
 		                    RequestDispatcher dispatcher = request.getRequestDispatcher("ElevePage.jsp");
 		                    dispatcher.forward(request, response);
 		                }
@@ -156,10 +171,16 @@ public class ServletCentrale extends HttpServlet {
 		                String type = etudiants.getType();
 		                if ("admin".equals(type)) {
 		                    // Rediriger vers la page d'administration
+		                    auth = 1;
+		                    request.setAttribute("auth", auth);
+
 		                    RequestDispatcher dispatcher = request.getRequestDispatcher("AdminPage.jsp");
 		                    dispatcher.forward(request, response);
 		                } else if ("eleve".equals(type)) {
 		                    // Rediriger vers la page des élèves
+                            auth = 2;
+                            request.setAttribute("auth", auth);
+
 		                    RequestDispatcher dispatcher = request.getRequestDispatcher("ElevePage.jsp");
 		                    dispatcher.forward(request, response);
 		                }
@@ -290,6 +311,29 @@ public class ServletCentrale extends HttpServlet {
                 
 		    	RequestDispatcher dispatcher = request.getRequestDispatcher("ElevePage.jsp");
 	            dispatcher.forward(request, response);
+		    }
+		    else if ("triModuleEval".equals(action)) {
+		        // Récupérer les paramètres de tri
+		        String selectedModule = request.getParameter("module");
+
+		        // Filtrer les notes par module
+		        List<Evaluation> filteredEvalByModule = new ArrayList<>();
+		        if (selectedModule == null || selectedModule.isEmpty()) {
+		        	filteredEvalByModule.addAll(evaluations);
+		        } else {
+		            for (Evaluation evaluation : evaluations) {
+		                if (selectedModule.equals(String.valueOf(evaluation.getMod()))) {
+		                	filteredEvalByModule.add(evaluation);
+		                }
+		            }
+		        }
+		        request.setAttribute("evaluations", filteredEvalByModule);
+
+		        // Récupérer la liste des modules et la définir dans la requête
+		        request.setAttribute("modules", modules);
+
+		        RequestDispatcher dispatcher = request.getRequestDispatcher("AffichageEvaluation.jsp");
+		        dispatcher.forward(request, response);
 		    }
 
 	 }

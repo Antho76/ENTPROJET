@@ -9,6 +9,10 @@
     
 </head>
 <body>
+<% 
+    int auth = (int) request.getAttribute("auth");
+    if (auth != 1){response.sendRedirect("test.jsp");};
+    %>
     <h1>Bienvenue sur la page d'administration</h1>
     <!-- Ajoutez ici le contenu spécifique pour les administrateurs -->
 </body>

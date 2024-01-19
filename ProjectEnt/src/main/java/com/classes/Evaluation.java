@@ -37,7 +37,7 @@ public class Evaluation {
         return this.Module;
     }
     
-    public String getStrMod(int mod) {
+    public String getStrModule(int mod) {
         
         if(mod == 0) {
             return "module littéraire";

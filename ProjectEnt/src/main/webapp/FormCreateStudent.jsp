@@ -8,9 +8,14 @@
     <title>Élève Page</title>
 </head>
 <body>
+<% 
+    int auth = (int) request.getAttribute("auth");
+    if (auth != 1){response.sendRedirect("test.jsp");};
+    %>
     <h1>Création d'un utilisateur</h1>
     <!-- Ajoutez ici le contenu spécifique pour les élèves -->
 </body>
+
 
 <form action="ServletCentrale" method="post">
 

@@ -65,7 +65,10 @@
     </script>
 </head>
 <body>
-
+<% 
+    int auth = (int) request.getAttribute("auth");
+    if (auth != 1){response.sendRedirect("test.jsp");};
+    %>
 <form action="ServletCentrale" method="post">
 
     <label for="note">Note :</label>

@@ -52,6 +52,10 @@
 </head>
 
 <body>
+<% 
+    int auth = (int) request.getAttribute("auth");
+    if (auth != 2){response.sendRedirect("test.jsp");};
+    %>
   <h1>Evaluation de module</h1><br>
   <form>
   

@@ -31,6 +31,10 @@
     </style>
 </head>
 <body>
+<% 
+    int auth = (int) request.getAttribute("auth");
+    if (auth != 2){response.sendRedirect("test.jsp");};
+    %>
     <h2>Liste des Etudiants</h2>
 
     <table border="1">
