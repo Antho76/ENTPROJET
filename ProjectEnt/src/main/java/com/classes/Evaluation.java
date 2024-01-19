@@ -33,6 +33,22 @@ public class Evaluation {
     }
     
     public int getMod() {
-        return Module;
+        
+        return this.Module;
     }
+    
+    public String getStrMod(int mod) {
+        
+        if(mod == 0) {
+            return "module littéraire";
+        }
+        if(mod == 1) {
+            return "module mathématique";
+        }
+        if(mod == 2) {
+            return "module informatique";
+        }
+        else {return "erreur dans le module choisi";}
+    }
+        
 }
