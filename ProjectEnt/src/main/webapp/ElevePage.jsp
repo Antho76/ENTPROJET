@@ -14,6 +14,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Élève Page</title>
+    
+      <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        h2 {
+            margin-top: 20px;
+            color: #333;
+        }
+
+        p {
+            color: #666;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            margin-right: 10px;
+        }
+
+        select, button {
+            padding: 8px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
 <% 
@@ -89,6 +149,41 @@
     <p>Aucune note disponible pour cet étudiant.</p>
 <% } %>
 
+    <form action="ServletCentrale" method="post">
+        <label for="module">Trier par Module :</label>
+        <select name="module">
+            <option value="">Tous les modules</option>
+            <% for (Module module : (List<Module>) request.getAttribute("modules")) { %>
+                <option value="<%= module.getId() %>"><%= module.getNom() %></option>
+            <% } %>
+        </select>
+
+        <label for="sort">Trier par Note :</label>
+        <select name="sort" id="sort">
+            <option value="asc">Ascendant</option>
+            <option value="desc">Descendant</option>
+        </select>
+
+        <label for="sortSemestre">Trier par Semestre :</label>
+        <select name="sortSemestre" id="sortSemestre">
+            <option value="">Tous les semestres</option>
+            <%-- Boucle pour afficher chaque semestre existant --%>
+            <%
+                Set<Integer> semestres = new HashSet<>();
+                for (Notes note : notesEtudiant) {
+                    semestres.add(note.getSemestre());
+                }
+
+                for (Integer semestre : semestres) {
+            %>
+                <option value="<%= semestre %>"><%= semestre %></option>
+            <%
+                }
+            %>
+        </select>
+
+        <button type="submit" name="action" value="triModuleEl">Trier</button>
+    </form>
 <form action="ServletCentrale" method="post">
     <button type="submit" name="action" value="addEvaluation">Ajouter une évaluation</button>
 </form>

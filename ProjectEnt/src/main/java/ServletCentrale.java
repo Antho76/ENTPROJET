@@ -368,6 +368,56 @@ public class ServletCentrale extends HttpServlet {
 		        RequestDispatcher dispatcher = request.getRequestDispatcher("AffichageEvaluation.jsp");
 		        dispatcher.forward(request, response);
 		    }
+		    else if ("triModuleEl".equals(action)) {
+		        // Récupérer les paramètres de tri
+		        String selectedModule = request.getParameter("module");
+		        String sortDirection = request.getParameter("sort");
+		        String sortSemestre = request.getParameter("sortSemestre");  // Nouveau paramètre de tri
+
+		        // Filtrer les notes par module
+		        List<Notes> filteredNotesByModule = new ArrayList<>();
+		        if (selectedModule == null || selectedModule.isEmpty()) {
+		            filteredNotesByModule.addAll(notes);
+		        } else {
+		            for (Notes note : notes) {
+		                if (selectedModule.equals(String.valueOf(note.getModule()))) {
+		                    filteredNotesByModule.add(note);
+		                }
+		            }
+		        }
+
+		        // Trier les notes (ajouter cette partie à votre logique de tri existante)
+		        if ("asc".equals(sortDirection)) {
+		            Collections.sort(filteredNotesByModule, Comparator.comparing(Notes::getValeur));
+		        } else if ("desc".equals(sortDirection)) {
+		            Collections.sort(filteredNotesByModule, Comparator.comparing(Notes::getValeur).reversed());
+		        }
+
+		        // Nouvelle logique de tri par semestre
+		        if (sortSemestre != null && !sortSemestre.isEmpty()) {
+		            int selectedSemestre = Integer.parseInt(sortSemestre);
+		            filteredNotesByModule = filteredNotesByModule.stream()
+		                    .filter(note -> note.getSemestre() == selectedSemestre)
+		                    .collect(Collectors.toList());
+		        }
+
+		    	// Ajouter les notes triées à la requête
+		    	request.setAttribute("notes", filteredNotesByModule);
+		        // Mise à jour des attributs nécessaires
+		        request.setAttribute("etudiants", etudiants);
+		    	request.setAttribute("modules", modules);
+		    	request.setAttribute("matieres", matieres);
+		    	request.setAttribute("matieresMap", matieresMap);
+
+		        request.setAttribute("notes", filteredNotesByModule);
+		    	request.setAttribute("notesEtudiant", filteredNotesByModule);
+
+		        setModulesAndMatieresAsAttributes(request);
+
+		        // Dispatcher vers la page d'affichage des notes
+		        RequestDispatcher dispatcher = request.getRequestDispatcher("ElevePage.jsp");
+		        dispatcher.forward(request, response);
+		    }
 
 
 
