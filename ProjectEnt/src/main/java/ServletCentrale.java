@@ -122,6 +122,34 @@ public class ServletCentrale extends HttpServlet {
 	        dispatcher.forward(request, response);
 	    	
 	    }
+	    else if ("triSpecialite".equals(action)) {
+	        // Récupérer la spécialité sélectionnée pour le tri
+	        String selectedSpecialite = request.getParameter("specialite");
+
+	        // Filtrer les étudiants par spécialité
+	        List<Etudiant> filteredEtudiantsBySpecialite = new ArrayList<>();
+	        if (selectedSpecialite == null || selectedSpecialite.isEmpty()) {
+	            filteredEtudiantsBySpecialite.addAll(etudiants);
+	        } else {
+	            for (Etudiant etudiant : etudiants) {
+	                if (selectedSpecialite.equals(etudiant.getSpe())) {
+	                    filteredEtudiantsBySpecialite.add(etudiant);
+	                }
+	            }
+	        }
+
+	        // Ajouter les étudiants triés par spécialité à la requête
+	        request.setAttribute("etudiants", filteredEtudiantsBySpecialite);
+
+	        // Mise à jour des autres attributs nécessaires
+	        request.setAttribute("modules", modules);
+	        request.setAttribute("matieres", matieres);
+	        request.setAttribute("matieresMap", matieresMap);
+
+	        // Dispatcher vers la page d'affichage des étudiants
+	        RequestDispatcher dispatcher = request.getRequestDispatcher("AffichageStudent.jsp");
+	        dispatcher.forward(request, response);
+	    }
 
         response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
@@ -335,6 +363,8 @@ public class ServletCentrale extends HttpServlet {
 		        RequestDispatcher dispatcher = request.getRequestDispatcher("AffichageEvaluation.jsp");
 		        dispatcher.forward(request, response);
 		    }
+
+
 
 	 }
 

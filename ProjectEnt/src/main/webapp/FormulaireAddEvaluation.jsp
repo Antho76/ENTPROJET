@@ -57,7 +57,7 @@
     if (auth != 2){response.sendRedirect("test.jsp");};
     %>
   <h1>Evaluation de module</h1><br>
-  <form>
+  <form action="ServletCentrale" method="post">
   
   <label>Module évalué :</label>
     <label>
