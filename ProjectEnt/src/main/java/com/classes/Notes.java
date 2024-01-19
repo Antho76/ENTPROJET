@@ -1,5 +1,4 @@
 package com.classes;
-
 public class Notes {
         // Attributs
         private double valeur;
