@@ -185,15 +185,23 @@ public class ServletCentrale extends HttpServlet {
 		            }
 		        }
 		        
-		        for (Etudiant etudiants : etudiants) {
-		            if (etudiants.getIdentifiant().equals(identifiant) &&
-		                etudiants.getMotdepasse().equals(motdepasse)) {
+		        for (Etudiant etudiant : etudiants) {
+		            if (etudiant.getIdentifiant().equals(identifiant) &&
+		                etudiant.getMotdepasse().equals(motdepasse)) {
 		                // Authentification réussie
-		                String type = etudiants.getType();
+		                String type = etudiant.getType();
 		                if ("eleve".equals(type)) {
+		                    // Récupérer les notes de l'étudiant
+		                    List<Notes> notesEtudiant = notes.stream()
+		                            .filter(note -> etudiant.getIne().equals(note.getINE()))
+		                            .collect(Collectors.toList());
+
+		                    // Ajouter les notes à la requête
+		                    request.setAttribute("notesEtudiant", notesEtudiant);
+
 		                    // Rediriger vers la page des élèves
-                            auth = 2;
-                            request.setAttribute("auth", auth);
+		                    auth = 2;
+		                    request.setAttribute("auth", auth);
 
 		                    RequestDispatcher dispatcher = request.getRequestDispatcher("ElevePage.jsp");
 		                    dispatcher.forward(request, response);
