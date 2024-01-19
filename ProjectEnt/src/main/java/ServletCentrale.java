@@ -8,6 +8,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -175,6 +177,46 @@ public class ServletCentrale extends HttpServlet {
 		        RequestDispatcher dispatcher = request.getRequestDispatcher("DisplayNotes.jsp");
 		        dispatcher.forward(request, response);
 		    	
+		    }
+		 // Dans la méthode doPost de ServletCentrale
+		    else if ("triModule".equals(action)) {
+		    	// Récupérer les paramètres de tri
+		    	String selectedModule = request.getParameter("module");
+		    	String sortDirection = request.getParameter("sort");
+
+		    	// Filtrer les notes par module
+		    	List<Notes> filteredNotesByModule = new ArrayList<>();
+		    	if (selectedModule == null || selectedModule.isEmpty()) {
+		    	    filteredNotesByModule.addAll(notes);
+		    	} else {
+		    	    for (Notes note : notes) {
+		    	        if (selectedModule.equals(String.valueOf(note.getModule()))) {
+		    	            filteredNotesByModule.add(note);
+		    	        }
+		    	    }
+		    	}
+
+		    	// Trier les notes (ajouter cette partie à votre logique de tri existante)
+		    	if ("asc".equals(sortDirection)) {
+		    	    Collections.sort(filteredNotesByModule, Comparator.comparing(Notes::getValeur));
+		    	} else if ("desc".equals(sortDirection)) {
+		    	    Collections.sort(filteredNotesByModule, Comparator.comparing(Notes::getValeur).reversed());
+		    	}
+
+		    	// Ajouter les notes triées à la requête
+		    	request.setAttribute("notes", filteredNotesByModule);
+		        // Mise à jour des attributs nécessaires
+		        request.setAttribute("etudiants", etudiants);
+		    	request.setAttribute("modules", modules);
+		    	request.setAttribute("matieres", matieres);
+		    	request.setAttribute("matieresMap", matieresMap);
+
+		        request.setAttribute("notes", filteredNotesByModule);
+		        setModulesAndMatieresAsAttributes(request);
+
+		        // Dispatcher vers la page d'affichage des notes
+		        RequestDispatcher dispatcher = request.getRequestDispatcher("DisplayNotes.jsp");
+		        dispatcher.forward(request, response);
 		    }
 	 }
 

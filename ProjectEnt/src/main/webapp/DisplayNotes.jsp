@@ -16,6 +16,7 @@
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
+            background-color: #f4f4f4;
         }
         h2 {
             color: #333;
@@ -24,14 +25,37 @@
             border-collapse: collapse;
             width: 100%;
             margin-top: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         th, td {
             border: 1px solid #ddd;
-            padding: 8px;
+            padding: 12px;
             text-align: left;
         }
         th {
             background-color: #f2f2f2;
+        }
+        form {
+            margin-top: 20px;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        select {
+            padding: 8px;
+            margin-right: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -102,5 +126,23 @@
     </tr>
 <% } %>
     </table>
+    <!-- Formulaire de tri par module -->
+<form action="ServletCentrale" method="post">
+        <label for="module">Trier par Module :</label>
+        <select name="module">
+            <option value="">Tous les modules</option>
+            <% for (Module module : (List<Module>) request.getAttribute("modules")) { %>
+                <option value="<%= module.getId() %>"><%= module.getNom() %></option>
+            <% } %>
+        </select>
+
+        <label for="sort">Trier par Note :</label>
+        <select name="sort" id="sort">
+            <option value="asc">Ascendant</option>
+            <option value="desc">Descendant</option>
+        </select>
+
+        <button type="submit" name="action" value="triModule">Trier</button>
+    </form>
 </body>
 </html>
