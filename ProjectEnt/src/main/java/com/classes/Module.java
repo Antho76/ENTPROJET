@@ -48,4 +48,22 @@ public class Module {
                 ", matieres=" + Arrays.toString(matieres) +
                 '}';
     }
+ // Dans la classe Module
+    public String getMatiereNomById(int matiereId) {
+        for (Matiere matiere : matieres) {
+            if (matiere.getId() == matiereId) {
+                return matiere.getNom();
+            }
+        }
+        return "";
+    }
+ // Dans la classe Module
+    public Matiere getMatiereById(int matiereId) {
+        for (Matiere matiere : matieres) {
+            if (matiere.getId() == matiereId) {
+                return matiere;
+            }
+        }
+        return null;
+    }
 }

@@ -45,4 +45,5 @@ public class Notes {
         public String getINE() {
             return this.idEtudiant;
         }
+        
 }

@@ -64,6 +64,8 @@ public class ServletCentrale extends HttpServlet {
         modules.add(new Module(1, "Module Mathématique", new Matiere[]{matieres.get(2), matieres.get(3)}));
         modules.add(new Module(2, "Module informatique", new Matiere[]{matieres.get(4), matieres.get(5)}));
         
+        notes.add(new Notes(12, 0,0,0,"0"));
+        
         for (Module module : modules) {
             List<String> matieresList = new ArrayList<>();
             for (Matiere matiere : module.getMatieres()) {
@@ -204,6 +206,8 @@ public class ServletCentrale extends HttpServlet {
 		                    // Rediriger vers la page des élèves
 		                    auth = 2;
 		                    request.setAttribute("auth", auth);
+		    		    	request.setAttribute("etudiants", etudiants);
+				            request.setAttribute("modules", modules);
 
 		                    RequestDispatcher dispatcher = request.getRequestDispatcher("ElevePage.jsp");
 		                    dispatcher.forward(request, response);
