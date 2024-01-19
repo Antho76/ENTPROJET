@@ -237,6 +237,7 @@ public class ServletCentrale extends HttpServlet {
 		    
 		    else if ("AddNotePage".equals(action)) {		
 		            // Récupérer la liste des modules
+		    	
 		            request.setAttribute("modules", modules);
 		            RequestDispatcher dispatcher = request.getRequestDispatcher("FormulaireAddNotes.jsp");
 		            dispatcher.forward(request, response);

@@ -93,7 +93,6 @@
     <label for="INE">ID Etudiant :</label>
     <input type="number" name="INE" required><br>
 
-    <button type="submit" name="action" value="AddNote">Ajouter la note</button>
 
 </form>
 
