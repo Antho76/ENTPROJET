@@ -180,13 +180,6 @@ public class ServletCentrale extends HttpServlet {
 
 		                    RequestDispatcher dispatcher = request.getRequestDispatcher("AdminPage.jsp");
 		                    dispatcher.forward(request, response);
-		                } else if ("eleve".equals(type)) {
-		                    // Rediriger vers la page des élèves
-                            auth = 2;
-                            request.setAttribute("auth", auth);
-
-		                    RequestDispatcher dispatcher = request.getRequestDispatcher("ElevePage.jsp");
-		                    dispatcher.forward(request, response);
 		                }
 		                return;
 		            }
@@ -197,14 +190,7 @@ public class ServletCentrale extends HttpServlet {
 		                etudiants.getMotdepasse().equals(motdepasse)) {
 		                // Authentification réussie
 		                String type = etudiants.getType();
-		                if ("admin".equals(type)) {
-		                    // Rediriger vers la page d'administration
-		                    auth = 1;
-		                    request.setAttribute("auth", auth);
-
-		                    RequestDispatcher dispatcher = request.getRequestDispatcher("AdminPage.jsp");
-		                    dispatcher.forward(request, response);
-		                } else if ("eleve".equals(type)) {
+		                if ("eleve".equals(type)) {
 		                    // Rediriger vers la page des élèves
                             auth = 2;
                             request.setAttribute("auth", auth);
