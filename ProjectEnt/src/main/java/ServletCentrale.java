@@ -37,7 +37,7 @@ public class ServletCentrale extends HttpServlet {
         // Ajoutez des utilisateurs de base
         utilisateurs.add(new Utilisateur("admin", "adminpass", "admin"));
         utilisateurs.add(new Utilisateur("eleve", "elevepass", "eleve"));
-        etudiants.add(new Etudiant("Pain", "Anthonin", "maçonnerie", "0", "antho","pass", "etudiant" ));
+        etudiants.add(new Etudiant("Pain", "Anthonin", "maçonnerie", "0", "antho","pass", "eleve" ));
         etudiants.add(new Etudiant("Didier","Deschamps","info","rffsj5","4","ea","eleve"));
 
         matieres.add(new Matiere(0, "Français"));
