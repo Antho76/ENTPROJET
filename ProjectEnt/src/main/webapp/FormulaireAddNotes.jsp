@@ -8,10 +8,58 @@
 <head>
     <meta charset="UTF-8">
     <title>Ajouter une Note</title>
+        <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
 
     <script>
         var modules = [
-            <%
+            <%                
+           		List<Etudiant> etudantList = (List<Etudiant>)request.getAttribute("etudiants");
                 List<Module> modulesList = (List<Module>)request.getAttribute("modules");
                 for (int i = 0; i < modulesList.size(); i++) {
                     Module module = modulesList.get(i);
@@ -69,30 +117,40 @@
     int auth = (int) request.getAttribute("auth");
     if (auth != 1){response.sendRedirect("test.jsp");};
     %>
+
 <form action="ServletCentrale" method="post">
 
     <label for="note">Note :</label>
-    <input type="number" name="note" required><br>
+    <input type="number" name="note" required>
 
     <label for="module">Module :</label>
     <select name="module" required onchange="updateMatieres()">
         <% for (Module module : modulesList) { %>
             <option value="<%= module.getId() %>"><%= module.getNom() %></option>
         <% } %>
-    </select><br>
+    </select>
 
     <label for="matiere">Matière :</label>
     <select name="matiere" required>
         <option value="" disabled selected>Choisissez d'abord un module</option>
-        <!-- Aucune boucle ici car la mise à jour se fait via JavaScript -->
-    </select><br>
+    </select>
 
     <label for="semestre">Semestre :</label>
-    <input type="number" name="semestre" required><br>
+    <input type="number" name="semestre" required>
 
     <label for="INE">ID Etudiant :</label>
-    <input type="number" name="INE" required><br>
+    <select name="INE" required>
+        <option value="" disabled selected>Choisissez un ID Etudiant</option>
+        <%
+            for (Etudiant etudiant : etudantList) {
+        %>
+            <option value="<%= etudiant.getIne() %>"><%= etudiant.getIne() %></option>
+        <%
+            }
+        %>
+    </select>
 
+    <button type="submit" name="action" value="AddNote">Ajouter la note</button>
 
 </form>
 
