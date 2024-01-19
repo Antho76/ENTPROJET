@@ -198,7 +198,7 @@ public class ServletCentrale extends HttpServlet {
 
 		                    // Ajouter les notes à la requête
 		                    request.setAttribute("notesEtudiant", notesEtudiant);
-
+		                    
 		                    // Rediriger vers la page des élèves
 		                    auth = 2;
 		                    request.setAttribute("auth", auth);
